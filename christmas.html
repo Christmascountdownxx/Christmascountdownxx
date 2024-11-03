@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Christmas Countdown Timer - Get in the holiday spirit!">
+    <meta name="keywords" content="Christmas, countdown, timer, holiday">
+    <title>Christmas Countdown 🎄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-weight: 700;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            min-width: 120px;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .countdown-item::after {
+            content: "🎁";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .number {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .decorations {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            animation: fall linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .mistletoe {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: sway 3s ease-in-out infinite;
+            transform-origin: top center;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .emoji-decor {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .footer-emoji {
+            margin-top: 3rem;
+            font-size: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                min-width: 100px;
+                padding: 1rem;
+            }
+
+            .number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorations">
+        <!-- Mistletoe decorations -->
+        <div class="mistletoe" style="top: 10px; left: 20%">🎄</div>
+        <div class="mistletoe" style="top: 10px; right: 20%">🎄</div>
+        <div class="mistletoe" style="top: 10px; left: 50%; transform: translateX(-50%)">🌿</div>
+        
+        <!-- Floating emoji decorations -->
+        <div class="emoji-decor" style="top: 20%; left: 10%">🦌</div>
+        <div class="emoji-decor" style="top: 30%; right: 10%">⭐</div>
+        <div class="emoji-decor" style="bottom: 20%; left: 15%">🎅</div>
+        <div class="emoji-decor" style="bottom: 30%; right: 15%">🤶</div>
+        
+        <!-- Snowflakes container -->
+        <div id="snowflakes"></div>
+    </div>
+
+    <div class="container">
+        <h1>🎄 Christmas Countdown 🎄</h1>
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <div class="number" id="days">--</div>
+                <div class="label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="hours">--</div>
+                <div class="label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="minutes">--</div>
+                <div class="label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="seconds">--</div>
+                <div class="label">Seconds</div>
+            </div>
+        </div>
+        <div class="footer-emoji">
+            <span>🎅</span>
+            <span>🎄</span>
+            <span>🎁</span>
+            <span>⭐</span>
+            <span>🦌</span>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const christmas = new Date(new Date().getFullYear(), 11, 25);
+            if (new Date() > christmas) {
+                christmas.setFullYear(christmas.getFullYear() + 1);
+            }
+            
+            const now = new Date();
+            const diff = christmas - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeChars = ['❄️', '⛄', '🎄'];
+            const numberOfSnowflakes = 30;
+
+            for (let i = 0; i < numberOfSnowflakes; i++) {
+                createSnowflake(snowflakesContainer, snowflakeChars);
+            }
+        }
+
+        function createSnowflake(container, chars) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = chars[Math.floor(Math.random() * chars.length)];
+            
+            const startPositionLeft = Math.random() * 100;
+            const animationDuration = 5 + Math.random() * 10;
+            const size = 10 + Math.random() * 20;
+            
+            snowflake.style.left = `${startPositionLeft}vw`;
+            snowflake.style.fontSize = `${size}px`;
+            snowflake.style.animationDuration = `${animationDuration}s`;
+            snowflake.style.opacity = 0.7 + Math.random() * 0.3;
+            
+            container.appendChild(snowflake);
+            
+            snowflake.addEventListener('animationend', () => {
+                snowflake.remove();
+                createSnowflake(container, chars);
+            });
+        }
+
+        // Initialize countdown and snowflakes
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        createSnowflakes();
+    </script>
+</body>
+</html>
